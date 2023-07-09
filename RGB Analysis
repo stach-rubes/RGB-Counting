@@ -1,0 +1,39 @@
+javascript
+// Create a canvas element
+const canvas = document.createElement('canvas');
+const ctx = canvas.getContext('2d');
+
+// Load the image
+const image = new Image();
+image.src = 'path/to/image.jpg';
+
+// Wait for the image to load
+image.onload = function() {
+  // Set the canvas dimensions to match the image
+  canvas.width = image.width;
+  canvas.height = image.height;
+
+  // Draw the image onto the canvas
+  ctx.drawImage(image, 0, 0);
+
+  // Get the pixel data of the image
+  const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  const pixels = imageData.data;
+
+  // Define the color you want to count (e.g., red)
+  const targetColor = [255, 0, 0]; // RGB values
+
+  // Count the pixels of the target color
+  let count = 0;
+  for (let i = 0; i < pixels.length; i += 4) {
+    const r = pixels[i];
+    const g = pixels[i + 1];
+    const b = pixels[i + 2];
+
+    if (r === targetColor[0] && g === targetColor[1] && b === targetColor[2]) {
+      count++;
+    }
+  }
+
+  console.log(`Number of pixels of the target color: ${count}`);
+};
